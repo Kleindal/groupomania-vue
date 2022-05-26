@@ -25,7 +25,17 @@ const router = createRouter({
     {
       path: '/chatspace',
       name: 'chatspace',
-      component: () => import('../views/HomeView.vue')
+      component: () => import('../views/HomeView.vue'),
+      children: [
+        {
+          path: '',
+          component: () => import('../components/WelcomeDisplay.vue'),
+        },
+        {
+          path: ':id',
+          component: () => import('../components/ListPost.vue'),
+        }
+      ]
     }
   ]
 })

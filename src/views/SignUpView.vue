@@ -21,7 +21,6 @@ export default {
                 password: this.password,
                 confirmPassword: this.confirmPassword
             }
-            console.log(userForm);
             try {
                 const {data} = await this.axios.post('http://localhost:3006/api/sign/up', userForm);
                 this.$router.push("login")

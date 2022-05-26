@@ -1,4 +1,8 @@
 <script>
+import ListGroup from '@/components/ListGroup.vue';
+import ListPost from '@/components/ListPost.vue';
+import EditPost from '@/components/EditPost.vue';
+import { useGlobalStore } from '@/stores/global';
 const token = localStorage.getItem('token');
 const config = {
     headers: { Authorization: `Bearer ${token}` }
@@ -10,14 +14,25 @@ export default {
     }
   },
   components: {
+    ListGroup,
+    ListPost,
+    EditPost
   },
   async created() {
     const {data} = await this.axios.get('http://localhost:3006/api/users', config);
     this.users = data;
+    const userStore = useGlobalStore();
+    userStore.$patch({users: data});
+  },
+  watch: {
+    $route (to, from){
+      const store = useGlobalStore();
+      this.selectedGroup = store.groups.filter(group => group.id == to.params.id)[0];
+    }
   },
   methods: {
-    selectGroup: function(id) {
-      this.selectedGroup = id;
+    selectGroup: function(group) {
+      this.selectedGroup = group;
     }
   }
 }
@@ -28,7 +43,9 @@ export default {
   <div class="">
     <nav class="navbar bg-light fixed-top">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">Groupomania</a>
+        <a class="navbar-brand groupomania-logo" href="#">
+          Groupomania<span style="color: var(--primary-color)">#{{selectedGroup?.title}}</span>
+        </a>
         <div class="d-none d-md-block icons-nav">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
             <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
@@ -94,6 +111,14 @@ export default {
     </nav>
   </div>
 
+  <div class="container-fluid margin-for-navbar">
+    <div class="row justify-content-md-center">
+      <list-group @selectedGroup="selectGroup($event)"></list-group>
+      <router-view></router-view>
+      <!-- <edit-post></edit-post> -->
+    </div>
+  </div>
+
 </template>
 
 <style>
@@ -107,6 +132,10 @@ export default {
 .navbar {
   /* border-bottom: 1px solid #b1b1b1; */
   box-shadow: 1px 10px 25px #c5c5c5ce;
+}
+
+.groupomania-logo {
+  width: 20px;
 }
 .icons-nav svg {
   margin: 0px 20px 0px 20px;
