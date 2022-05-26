@@ -5,61 +5,84 @@ export default {
     data() {
         return {
             email: '',
-            confirmEmail: '',
+            name: '',
+            surname: '',
             password: '',
             confirmPassword: '',
             cguAccepted: false
         }
     },
-    methods: {
-        onSubmit() {
+        methods: {
+        async onSubmit() {
             let userForm = {
                 email: this.email,
-                confirmEmail: this.confirmEmail,
+                name: this.name,
+                surname: this.name,
                 password: this.password,
-                confirmPassword: this.confirmPassword,
-                cguAccepted: this.cguAccepted
+                confirmPassword: this.confirmPassword
             }
             console.log(userForm);
+            try {
+                const {data} = await this.axios.post('http://localhost:3006/api/sign/up', userForm);
+                this.$router.push("login")
+            } catch (e) {
+                this.email = '';
+                this.name = '';
+                this.surname = '';
+                this.password = '';
+                this.confirmPassword = '';
+            }
         }
     },
     computed: {
-        isFormValid() {
-            if (!this.isEmailValid) {
-                return false;
-            }
+        async isFormValid() {
+            // if (!this.isEmailValid) {
+            //     return false;
+            // }
             if (this.password !== this.confirmPassword) {
                 return false;
             }
             return this.email && this.password && this.cguAccepted;
         },
-        isEmailValid() {
-            return this.confirmEmail === this.email;
-        },
-        isEmailDirty() {
-            return this.email !== '' && this.confirmEmail !== '';
-        },
+        // isEmailValid() {
+        //     return this.confirmEmail === this.email;
+        // },
+        // isEmailDirty() {
+        //     return this.email !== '' && this.confirmEmail !== '';
+        // },
     }
 }
 </script>
 
 <template>
- <div id="signup-page">
+ <div id="signup-page" class="col-md-8 col-lg-6 col-xl-5">
        <form @submit.prevent="onSubmit">
+             <div class="presentation">
+                <img src="../assets/logo.svg" class="App-logo" alt="logo" />
+                <p class="text-muted mb-4">Inscrivez vous pour continuer</p>
+            </div>
             <div class="title-hype wslide">
             <div>
                 <span>S'inscrire</span>
             </div>
             </div>
             <div class="form-group mb-3">
+                <label for="surname">Prénom</label>
+                <input name="surname" class="form-control" type="text" placeholder="Entrez surname" v-model="surname" />
+            </div>
+            <div class="form-group mb-1">
+                <label for="name">Nom</label>
+                <input name="name" class="form-control" type="text" placeholder="Entrez name" v-model="name" />
+            </div>
+            <div class="form-group mb-3">
                 <label for="email">Adresse Email</label>
                 <input name="email" class="form-control" type="text" placeholder="Entrez email" v-model="email" />
             </div>
-            <div class="form-group mb-3">
+            <!-- <div class="form-group mb-3">
                 <label for="confirmEmail">Confirmez votre adresse email</label>
                 <input name="confirmEmail" class="form-control" type="text" placeholder="Entrez email" v-model="confirmEmail" />
                 <p v-if="isEmailDirty && !isEmailValid" class="text-danger">Les emails ne correspondent pas !</p>
-            </div>
+            </div> -->
             <div class="form-group mb-3">
                 <label for="password">Mot de passe</label>
                 <input name="password" class="form-control" type="text" placeholder="Entrez votre mot de passe" v-model="password" />

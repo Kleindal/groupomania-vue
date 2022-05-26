@@ -5,13 +5,14 @@ import { RouterView } from 'vue-router';
 
 <template>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
 <RouterView />
 
 </template>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;400;500;600;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
+
 
 * {
   /* border: 2px solid red; */
@@ -23,8 +24,9 @@ a:link {
 }
 
 :root {
-  --primary-color: #00B8A5;
-  --secondary-color: black;
+  --primary-color: #FD2D01;
+  --secondary-color: #FFD7D7;
+  --third-color: #4E5166;
   --contrast: #25252510;
 
   --primary-bg: #fff;
@@ -44,10 +46,10 @@ a:link {
   --secondary-button: #3975f7;
 
   /* font */
-  --font-s: 12px "Inter", "Arial", "Helvetica", sans-serif;
-  --font-md: 14px "Inter", "Arial", "Helvetica", sans-serif;
-  --font-lg: 16px "Inter", "Arial", "Helvetica", sans-serif;
-  --font-xl: bold 26px Inter, "Arial", "Helvetica", sans-serif;
+  --font-s: 12px "Lato", "Arial", "Helvetica", sans-serif;
+  --font-md: 14px "Lato", "Arial", "Helvetica", sans-serif;
+  --font-lg: 16px "Lato", "Arial", "Helvetica", sans-serif;
+  --font-xl: bold 26px Lato, "Arial", "Helvetica", sans-serif;
   /*  */
 }
 
@@ -70,16 +72,13 @@ div {
 .fix-footer {
   overflow-y: hidden;
   position: absolute;
-  padding: 8px;
-  left: 0;
   bottom: 0;
   height: 2.5rem;
   width: 100%;
   text-align: center;
-  background-color: var(--secondary-bg);
   background-position: bottom;
   background-repeat: repeat;
-  color: var(--text-color1);
+  color: var(--text-color2);
 }
 
 .App-logo {
@@ -94,6 +93,7 @@ div {
   line-height: 1.2em!important;
   font: var(--font-xl);
   margin: 30px 0;
+  color: #333333;
 }
 .home-connect, #login-page, #signup-page, .presentation {
   display: flex;
@@ -158,7 +158,7 @@ div {
 }
 
 .signup a, .login a {
-  font-weight: 600;
+  font-weight: 700;
   color: white;
   background-color: var(--primary-button);
   font: var(--font-lg);
@@ -206,11 +206,11 @@ div {
   justify-content: space-evenly;
   color: var(--text-color2);
   font: var(--font-m);
-  border-bottom: 1px solid var(--primary-color);
+  border-bottom: 1px solid var(--secondary-bg);
 }
 .group-header:hover {
   color: var(--text-color1);
-  background-color: var(--primary-color);
+  background-color: var(--secondary-bg);
 }
 .group-header img {
   margin: 10px;
@@ -260,7 +260,7 @@ div {
 .message-text {
   font: var(--font-s);
   color: var(--text-color1);
-  background-color: var(--primary-color);
+  background-color: var(--primary-bg);
   padding: 0.5em;
   border-radius: 10px;
   -webkit-border-radius: 10px;

@@ -1,6 +1,16 @@
 <script lang="js">
 import { RouterLink } from 'vue-router';
 
+
+// axios({
+//   method: 'post',
+//   url: '/sign/in',
+//   data: {
+//     name: 'Fred',
+//     surname: 'Flintstone'
+//   }
+// });
+
 export default {
     data() {
         return {
@@ -10,13 +20,22 @@ export default {
         }
     },
     methods: {
-        onSubmit() {
+        async onSubmit() {
             let userForm = {
                 email: this.email,
                 password: this.password,
                 keepConnected: this.keepConnected
             }
-            console.log(userForm);
+            try {
+                const {data} = await this.axios.post('http://localhost:3006/api/sign/in', userForm);
+                localStorage.setItem('userId', data.userId);
+                localStorage.setItem('token', data.token);
+                this.$router.push("chatspace")
+            } catch (e) {
+                this.email = '';
+                this.password = '';
+                this.keepConnected = false;
+            }
         }
     }
 }
@@ -25,6 +44,10 @@ export default {
 <template>
      <div id="login-page">
         <form @submit.prevent="onSubmit">
+            <div class="presentation">
+                <img src="../assets/logo.svg" class="App-logo" alt="logo" />
+                <p class="text-muted mb-4">Connectez vous pour continuer</p>
+            </div>
             <div class="title-hype wslide">
             <div>
                 <span>Connexion</span>

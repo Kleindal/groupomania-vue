@@ -1,204 +1,65 @@
 <script lang="js">
 
+const token = localStorage.getItem('token');
+const config = {
+    headers: { Authorization: `Bearer ${token}` }
+};
+
+export default {
+  data() {
+    return {
+      groups: [],
+      selectedGroup: null
+    }
+  },
+  async created() {
+    const {data} = await this.axios.get('http://localhost:3006/api/groups', config);
+    this.groups = data;
+  },
+  methods: {
+      selectGroup: function(id) {
+          this.selectedGroup = id;
+          this.$emit('selectedGroup', this.selectedGroup);
+      }
+  }
+}
 </script>
 
 <template>
     <div>
-        <div class="card d-flex" style="background-color: #eee;">
-            <a href="#" class="d-flex justify-content-between"></a>
-            <ul class="list-unstyled">
-            <li class="p-2">
-                <a href="#!">
-                <div class="mini-group">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-8.webp" alt="avatar"
-                    class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
-                    <div>
-                    <p class="fw-bold">John Doe</p>
-                    <p class="small text-muted">Hello, Are you there?</p>
-                    </div>
-                </div>
-                <div class="mini-group-time">
-                    Just now
-                    <span class="badge bg-secondary float-end">1</span>
-                </div>
+        <div class="list-group">
+            <li v-bind="{ active: isActive }" v-for="group in groups" :key="group.id">
+                <a href="#" @click="selectGroup(group.id)">
+                    {{group.title}}
                 </a>
             </li>
-            <li class="p-2">
-                <a href="#!" >
-                <div class="mini-group">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-1.webp" alt="avatar"
-                    class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
-                    <div>
-                    <p class="fw-bold">Danny Smith</p>
-                    <p class="small text-muted">Lorem ipsum dolor sit.</p>
-                    </div>
-                </div>
-                <div class="mini-group-time">
-                    5 mins ago
-                </div>
-                </a>
-            </li>
-            <li class="p-2">
-                <a href="#!" >
-                <div class="mini-group">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-1.webp" alt="avatar"
-                    class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
-                    <div>
-                    <p class="fw-bold">Danny Smith</p>
-                    <p class="small text-muted">Lorem ipsum dolor sit.</p>
-                    </div>
-                </div>
-                <div class="mini-group-time">
-                    5 mins ago
-                </div>
-                </a>
-            </li>
-            <li class="p-2">
-                <a href="#!" >
-                <div class="mini-group">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-1.webp" alt="avatar"
-                    class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
-                    <div>
-                    <p class="fw-bold">Danny Smith</p>
-                    <p class="small text-muted">Lorem ipsum dolor sit.</p>
-                    </div>
-                </div>
-                <div class="mini-group-time">
-                    5 mins ago
-                </div>
-                </a>
-            </li>
-            <li class="p-2">
-                <a href="#!" >
-                <div class="mini-group">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-2.webp" alt="avatar"
-                    class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
-                    <div>
-                    <p class="fw-bold">Alex Steward</p>
-                    <p class="small text-muted">Lorem ipsum dolor sit.</p>
-                    </div>
-                </div>
-                <div class="mini-group-time">
-                    Yesterday
-                </div>
-                </a>
-            </li>
-            <li class="p-2">
-                <a href="#!" >
-                <div class="mini-group">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-3.webp" alt="avatar"
-                    class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
-                    <div>
-                    <p class="fw-bold">Ashley Olsen</p>
-                    <p class="small text-muted">Lorem ipsum dolor sit.</p>
-                    </div>
-                </div>
-                <div class="mini-group-time">
-                    Yesterday
-                </div>
-                </a>
-            </li>
-            <li class="p-2">
-                <a href="#!" >
-                <div class="mini-group">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-3.webp" alt="avatar"
-                    class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
-                    <div>
-                    <p class="fw-bold">Ashley Olsen</p>
-                    <p class="small text-muted">Lorem ipsum dolor sit.</p>
-                    </div>
-                </div>
-                <div class="mini-group-time">
-                    Yesterday
-                </div>
-                </a>
-            </li>
-            <li class="p-2">
-                <a href="#!" >
-                <div class="mini-group">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-3.webp" alt="avatar"
-                    class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
-                    <div>
-                    <p class="fw-bold">Ashley Olsen</p>
-                    <p class="small text-muted">Lorem ipsum dolor sit.</p>
-                    </div>
-                </div>
-                <div class="mini-group-time">
-                    Yesterday
-                </div>
-                </a>
-            </li>
-            <li class="p-2">
-                <a href="#!" >
-                <div class="mini-group">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-3.webp" alt="avatar"
-                    class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
-                    <div>
-                    <p class="fw-bold">Ashley Olsen</p>
-                    <p class="small text-muted">Lorem ipsum dolor sit.</p>
-                    </div>
-                </div>
-                <div class="mini-group-time">
-                    Yesterday
-                </div>
-                </a>
-            </li>
-            <li class="p-2">
-                <a href="#!" >
-                <div class="mini-group">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-4.webp" alt="avatar"
-                    class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
-                    <div>
-                    <p class="fw-bold">Kate Moss</p>
-                    <p class="small text-muted">Lorem ipsum dolor sit.</p>
-                    </div>
-                </div>
-                <div class="mini-group-time">
-                    Yesterday
-                </div>
-                </a>
-            </li>
-            <li class="p-2">
-                <a href="#!" >
-                <div class="mini-group">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-5.webp" alt="avatar"
-                    class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
-                    <div>
-                    <p class="fw-bold">Lara Croft</p>
-                    <p class="small text-muted">Lorem ipsum dolor sit.</p>
-                    </div>
-                </div>
-                <div class="mini-group-time">
-                   Yesterday
-                </div>
-                </a>
-            </li>
-            </ul>
         </div>
     </div>
 </template>
 
 <style>
-    .list-unstyled {
+    .list-group {
+        display: flex;
+        list-style: none;
         max-height: 80vh;
-        min-height: 360px;
+        min-width: 180px!important;
         overflow-y: scroll;
     }
-  /* .list-group {
-    width: 370px;
-  }
-    .list-group a {
-    height: 90px;
-  }
+    .list-group li {
+
+        height: 90px;
+  
+        padding: 1em;
+        justify-content: space-between;
+    }
   .list-group p {
     font: var(--font-m);
   }
   .peoples {
     font: var(--font-s);
-  } */
+  }
   .list-unstyled a {
-      display: flex;
-      justify-content: space-between;
+
   } 
 
   .mini-group {

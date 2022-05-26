@@ -25,7 +25,7 @@ const router = createRouter({
     {
       path: '/chatspace',
       name: 'chatspace',
-      component: () => import('../views/ChatSpace.vue')
+      component: () => import('../views/HomeView.vue')
     }
   ]
 })

@@ -3,16 +3,16 @@ import { RouterLink } from 'vue-router'
 </script>
 
 <template>
-<div style="display:flex; justify-content:center;">
+<div class="container col-md-8 col-lg-6 col-xl-5">
     <div class="home-connect">
       <div class="presentation">
         <img src="../assets/logo.svg" class="App-logo" alt="logo" />
-        <div class="title-hype">
+      </div>
+      <div class="title-hype">
           <div>Connectez-vous dès</div>
           <div>à présent pour </div>
-          <div>participer à l"espace</div>
+          <div>participer à l'espace</div>
           <div>discussions</div>
-        </div>
       </div>
       <nav class="connect-page">
           <div class="login">
@@ -36,4 +36,8 @@ import { RouterLink } from 'vue-router'
 </template>
 
 <style scoped>
+.container {
+  display: flex;
+  justify-content: center;
+}
 </style>
