@@ -28,8 +28,8 @@ export default {
 </script>
 
 <template>
-  <div class="col-12 col-md-3 col-lg-2 text-center d-none d-md-block">
-    <div class="list-group">
+  <div class="col-12 d-none d-md-block">
+    <div class="list-group text-center d-flex">
       <RouterLink v-for="group in groups" :key="group.id" :to="'/' + group.id">
         #{{group.title}}
       </RouterLink>
@@ -42,6 +42,20 @@ export default {
     height: 100%;
     left: 0;
     position: fixed;
-    padding-left: 20px;
+    padding: 20px!important;
+  }
+
+  .list-group a {
+    text-align: left;
+    padding: 1em;
+    color: var(--third-color);
+    font: var(--font-lg);
+  }
+
+  .list-group a:active, .list-group a:focus {
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 10px;
+    width: fit-content;
   }
 </style>

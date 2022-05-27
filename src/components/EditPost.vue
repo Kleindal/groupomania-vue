@@ -78,7 +78,7 @@ export default {
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-12 col-md-6 text-left">
-          <div class="edit-profile">
+          <div>
             <h3 v-if="editionMode">Éditer un post</h3>
             <h3 v-else>Créer un post</h3>
           </div>
@@ -164,6 +164,10 @@ export default {
 </template>
 
 <style>
+
+.edit-profile {
+  width: 600px!important;
+}
 .file {
   visibility: hidden;
   position: absolute;

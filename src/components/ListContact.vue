@@ -23,13 +23,11 @@ export default {
 </script>
 
 <template>
-  <div class="col-12 col-md-9 col-lg-10 text-center">
-    <div class="container-fluid d-flex justify-content-center">
+  <div class="text-center">
+    <div class="container-fluid">
       <div class="row">
-       <div class="col-12 text-center">
-
+       <div class="list-contact">
         <ul class="p-0" style="list-style: none;">
-
           <li v-if="me">
             <div class="card mb-3 card-connected-user">
               <div class="row g-0">
@@ -44,7 +42,6 @@ export default {
               </div>
             </div>
           </li>
-
           <li v-for="user in users" :key="user.id">
             <div class="card mb-3">
               <div class="row g-0">
@@ -74,6 +71,11 @@ export default {
 </template>
 
 <style>
+
+.list-contact {
+  width: 500px;
+}
+
 /* Style the button that is used to open and close the collapsible content */
 .collapsible {
   background-color: #eee;
@@ -106,13 +108,13 @@ export default {
 
 
 .card-connected-user {
-  border: 4px solid gold;
-  background-color: #4E5166;
+  border: 4px solid var(--primary-color)!important;
+  background-color: #4E5166!important;
   color: white;
 }
 
 .card-connected-user img {
-  border-radius: 50%;
+  border-radius: 50%!important;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   -ms-border-radius: 50%;

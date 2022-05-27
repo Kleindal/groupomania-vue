@@ -130,8 +130,8 @@ export default {
     </nav>
   </div>
 
-  <div class="container-fluid margin-for-navbar">
-    <div class="row justify-content-md-center">
+  <div class="container-fluid adaptative">
+    <div class="row">
       <list-group @selectedGroup="selectGroup($event)"></list-group>
       <router-view></router-view>
       <!-- <edit-post></edit-post> -->
@@ -161,50 +161,9 @@ export default {
   height: 30px;
   width: 30px;
 }
-.margin-for-navbar {
+.adaptative {
     margin-top: 7em;
+    max-width: 800px!important;
 }
-
-.list-group {
-  height: 100%;
-  left: 0;
-  position: fixed;
-  padding-left: 20px;
-}
-.author div {
-    color: black;
-    padding: 1.3em;
-}
-
-.author img {
-  height: 70px;
-  width: 70px;
-  border-radius: 50%;
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  -ms-border-radius: 50%;
-  -o-border-radius: 50%;
-  border: 3px solid #4E5166;
-}
-
-.card-title {
-  padding: 0px 15px 0px 15px;
-  text-align: center;
-}
-.card.post {
-  max-width: 736px;
-  margin-bottom: 3em;
-}
-
-.card-img {
-  text-align: center;
-  padding: 1em;
-}
-.card-img img {
-  max-height: 600px;
-  max-width: 90%;
-  width: auto;
-}
-
 
 </style>

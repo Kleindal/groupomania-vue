@@ -48,8 +48,9 @@ a:link {
   /* font */
   --font-s: 12px "Lato", "Arial", "Helvetica", sans-serif;
   --font-md: 14px "Lato", "Arial", "Helvetica", sans-serif;
-  --font-lg: 16px "Lato", "Arial", "Helvetica", sans-serif;
+  --font-lg: 20px "Lato", "Arial", "Helvetica", sans-serif;
   --font-xl: bold 26px Lato, "Arial", "Helvetica", sans-serif;
+  --font-title: bold 20px Lato, "Arial", "Helvetica", sans-serif;
   /*  */
 }
 
@@ -63,8 +64,13 @@ body {
   width: auto;
 }
 
-.btn-infos {
-  margin-bottom: 50px!important;
+.btn-primary {
+  background-color: var(--primary-color)!important;
+  border: none!important;
+}
+.btn-secondary {
+  background-color: var(--third-color)!important;
+  border: none!important;
 }
 div {
   position: relative;
@@ -112,15 +118,6 @@ div {
   align-items: center;
 
 }
-/* .home-connect > div {
-  align-content: center;
-  height: 120px;
-  width: auto;
-  padding: 10px;
-  margin: 20px 20px;
-  border: solid 3px red;
-} */
-
 .connect-page {
   display: flex;
   align-items: center;
@@ -130,31 +127,6 @@ div {
 .connect-page > div {
   padding: 10px;
   margin-bottom: 10px;
-}
-
-/* Login and Signup Animation */
-.wslide {
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-}
-.wslide {
-  width: 9ch;
-  animation: typing 2s steps(16), blink .5s infinite alternate;
-  white-space: nowrap;
-  overflow: hidden;
-  border-right: 3px solid;
-  -webkit-animation: typing 2s steps(16), blink .5s infinite alternate;
-}
-@keyframes typing {
-  from {
-    width: 0;
-  }
-}
-@keyframes blink {
-  50% {
-    border-color: transparent;
-  }
 }
 
 .signup a, .login a {
@@ -178,72 +150,10 @@ div {
   color: white;
 }
 
-
-/* Chatspace */
-.chatspace {
-  display: block!important;
-}
-
 .nav-header {
   margin: 20px;
 }
-/* Groups */
-.group-aside {
-  height: auto;
-}
-.group-aside h3 {
-  font: var(--font-lg)!important;
-  color: var(--text-color2)
-}
-.group-header {
-  min-width: 200px;
-  max-width: 230px;
-  padding: 7px;
-  cursor: pointer!important;
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: center !important;
-  justify-content: space-evenly;
-  color: var(--text-color2);
-  font: var(--font-m);
-  border-bottom: 1px solid var(--secondary-bg);
-}
-.group-header:hover {
-  color: var(--text-color1);
-  background-color: var(--secondary-bg);
-}
-.group-header img {
-  margin: 10px;
-  height: 3.2em;
-  border-radius: 50%;
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  -ms-border-radius: 50%;
-  -o-border-radius: 50%;
-}
 
-/* Statuts  */
-.status {
-  font-size: 11px;
-  font-weight: 400;
-}
-.status:Online {
-  fill: #14c414!important;
-}
-.status:Offline {
-  fill: #b61010!important;
-}
-
-/* Message */
-.message-design {
-  width: 80%;
-  box-shadow: 0px 10px 200px #cecece;
-  border-radius: 5px;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  -ms-border-radius: 5px;
-  -o-border-radius: 5px;
-}
 
 .file-name {
   cursor: pointer;
@@ -256,33 +166,6 @@ div {
   -moz-border-radius: 10px;
   -ms-border-radius: 10px;
   -o-border-radius: 10px;
-}
-.message-text {
-  font: var(--font-s);
-  color: var(--text-color1);
-  background-color: var(--primary-bg);
-  padding: 0.5em;
-  border-radius: 10px;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  -ms-border-radius: 10px;
-  -o-border-radius: 10px;
-}
-.message-username {
-  color: var(--text-color2);
-  font: var(--font-md);
-}
-.message-list {
-  height: 80%;
-}
-
-.textarea {
-  resize: none!important;
-}
-
-/* Users */
-.modal-header {
-  justify-content: space-around!important;
 }
 
 
