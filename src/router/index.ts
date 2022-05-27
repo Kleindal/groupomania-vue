@@ -5,11 +5,6 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
-      name: 'main',
-      component: MainView
-    },
-    {
       path: '/login',
       name: 'login',
       // route level code-splitting
@@ -23,8 +18,8 @@ const router = createRouter({
       component: () => import('../views/SignUpView.vue')
     },
     {
-      path: '/chatspace',
-      name: 'chatspace',
+      path: '/',
+      name: 'home',
       component: () => import('../views/HomeView.vue'),
       children: [
         {
@@ -32,12 +27,40 @@ const router = createRouter({
           component: () => import('../components/WelcomeDisplay.vue'),
         },
         {
-          path: ':id',
+          path: ':id(\\d+)',
           component: () => import('../components/ListPost.vue'),
-        }
+        },
+        {
+          path: ':id(\\d+)/create-post',
+          name: 'create-post',
+          component: () => import('../components/EditPost.vue'),
+        },
+        {
+          path: ':id(\\d+)/edit-post/:postId',
+          name: 'edit-post',
+          component: () => import('../components/EditPost.vue'),
+        },
+        {
+          path: 'settings',
+          component: () => import('../components/Settings.vue'),
+        },
+        {
+          path: 'contacts',
+          component: () => import('../components/ListContact.vue'),
+        },
       ]
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem('token')
+    if (token || to.name === 'login' || to.name === 'signup') {
+      next()
+    } else {
+      next({name: 'login'})
+    }
+  }
+);
 
 export default router

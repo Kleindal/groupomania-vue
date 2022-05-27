@@ -17,7 +17,7 @@ export default {
             let userForm = {
                 email: this.email,
                 name: this.name,
-                surname: this.name,
+                surname: this.surname,
                 password: this.password,
                 confirmPassword: this.confirmPassword
             }
@@ -34,21 +34,12 @@ export default {
         }
     },
     computed: {
-        async isFormValid() {
-            // if (!this.isEmailValid) {
-            //     return false;
-            // }
-            if (this.password !== this.confirmPassword) {
-                return false;
-            }
-            return this.email && this.password && this.cguAccepted;
+        isFormValid() {
+          if (this.password !== this.confirmPassword) {
+              return false;
+          }
+          return this.email && this.password && this.cguAccepted;
         },
-        // isEmailValid() {
-        //     return this.confirmEmail === this.email;
-        // },
-        // isEmailDirty() {
-        //     return this.email !== '' && this.confirmEmail !== '';
-        // },
     }
 }
 </script>
@@ -84,12 +75,12 @@ export default {
             </div> -->
             <div class="form-group mb-3">
                 <label for="password">Mot de passe</label>
-                <input name="password" class="form-control" type="text" placeholder="Entrez votre mot de passe" v-model="password" />
+                <input name="password" class="form-control" type="password" placeholder="Entrez votre mot de passe" v-model="password" />
                 <small id="passwordHelp" class="form-text text-muted">Ne partagez pas votre mot de passe à qui que ce soit</small>
             </div>
             <div class="form-group mb-3">
                 <label for="confirmPassword">Confirmez Mot de passe</label>
-                <input name="confirmPassword" class="form-control" type="text" placeholder="Entrez votre mot de passe" v-model="confirmPassword" />
+                <input name="confirmPassword" class="form-control" type="password" placeholder="Entrez votre mot de passe" v-model="confirmPassword" />
             </div>
             <div class="form-group mb-3">
                 <label for="cguAccepted">Je confirme les CGU, lien.</label>
@@ -97,6 +88,6 @@ export default {
             </div>
             <input :disabled="!isFormValid" type="submit" class="btn btn-primary m-1" value="Submit" />
         </form>
-        <RouterLink to="/" class="btn btn-outline-secondary m-1">Retour</RouterLink>
+        <router-link to="/login" class="m-1">Se connecter</router-link>
     </div>
 </template>

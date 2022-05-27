@@ -17,8 +17,6 @@ export default {
   async created() {
     const {data} = await this.axios.get('http://localhost:3006/api/groups', config);
     this.groups = data;
-    const store = useGlobalStore();
-    store.$patch({groups: data});
   },
   methods: {
     selectGroup: function(group) {
@@ -32,7 +30,7 @@ export default {
 <template>
   <div class="col-12 col-md-3 col-lg-2 text-center d-none d-md-block">
     <div class="list-group">
-      <RouterLink v-for="group in groups" :key="group.id" :to="'/chatspace/' + group.id">
+      <RouterLink v-for="group in groups" :key="group.id" :to="'/' + group.id">
         #{{group.title}}
       </RouterLink>
     </div>

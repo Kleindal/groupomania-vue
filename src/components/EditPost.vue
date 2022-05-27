@@ -1,21 +1,33 @@
 <script lang="js">
 const token = localStorage.getItem('token');
 const config = {
-    headers: { Authorization: `Bearer ${token}` }
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "multipart/form-data",
+    }
 };
 
 export default {
   data() {
     return {
-      data: null,
+      form: { title: '', body: '', image_url: null },
+      selectedGroup: null,
+      postId: null,
+      editionMode: false
     }
   },
-  props: {
-    selectedGroup: null,
-    post: null
-  },
-  created() {
-    this.data = this.post;
+  async created() {
+    this.selectedGroup = this.$route.params.id;
+    if (this.$route.params.postId) {
+      const postId = this.$route.params.postId;
+      const {data} = await this.axios.get('http://localhost:3006/api/groups/' + this.selectedGroup + '/posts/' + postId, config);
+      const post = data;
+      this.postId = post.id;
+      this.form.title = post.title;
+      this.form.body = post.body;
+      this.form.image_url = post.image_url;
+      this.editionMode = true;
+    }
   },
   mounted() {
     document.querySelector('input[type="file"]').onchange = function(e) {
@@ -37,72 +49,115 @@ export default {
       file.click();
     },
     async onSubmit() {
-      let postForm = {
-          title: data.title,
-          image_url: data.image_url,
-          body: data.body,
-          group_id: data.selectedGroup
+      var file = document.querySelector('.file');
+      let formData = new FormData();
+      formData.append("file", file.files.item(0));
+      formData.append("title", this.form.title);
+      formData.append("body", this.form.body);
+      formData.append("group_id", this.selectedGroup);
+
+      if (this.editionMode) {
+        await this.axios.patch('http://localhost:3006/api/groups/' + this.selectedGroup + '/posts/' + this.postId, formData, config);
+      } else {
+        await this.axios.post('http://localhost:3006/api/groups/' + this.selectedGroup + '/posts', formData, config);
       }
-      console.log(postForm);
+      this.$router.push('/' + this.selectedGroup)
 
-      const {data} = await this.axios.post('http://localhost:3006/api/groups/' + this.selectedGroup + '/posts', postForm, config);
-      this.$router.push("")
-
-      data.title = '';
-      data.image_url = null;
-      data.body = '';
   }
   },
   computed: {
-    async isFormValid() {
-        if (this.password !== this.confirmPassword) {
-            return false;
-        }
-        return this.email && this.password && this.cguAccepted;
+    isFormValid() {
+      return this.form.title && this.form.body;
     },
 }
 }
 </script>
 
 <template>
-    <div class="container margin-for-navbar">
-    <div class="row justify-content-center">
-      <div class="col-12 col-md-6 text-left">
-
-        <div class="edit-profile">
-          <h3>Créer / Éditer un post</h3>
-        </div>
-        <form @submit.prevent="onSubmit">
-          <div>
-            <div class="form-group mb-4">
-              <label for="title">Titre</label>
-              <input name="title" class="form-control" type="text" v-model="title" />
-            </div>
-
-            <div class="ml-2 col-sm-6">
-              <div id="msg"></div>
-              <form method="post" id="image-form">
-                <input type="file" name="img[]" class="file" accept="image/*">
-                <div class="input-group my-3">
-                  <input type="text" class="form-control" disabled placeholder="Upload File" id="file">
-                  <div class="input-group-append">
-                    <button type="button" class="browse btn btn-primary" @click="browse()">Browse...</button>
-                  </div>
-                </div>
-              </form>
-            </div>
-
-            <div class="ml-2 col-sm-6">
-              <img src="https://placehold.it/80x80" id="preview" class="img-thumbnail">
-            </div>
-            <div class="form-group mb-4">
-              <label for="body">Contenu</label>
-              <textarea name="body" class="form-control" rows="3" v-model="body"></textarea>
-            </div>
+  <div class="col-12 col-md-9 col-lg-10 text-left">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-6 text-left">
+          <div class="edit-profile">
+            <h3 v-if="editionMode">Éditer un post</h3>
+            <h3 v-else>Créer un post</h3>
           </div>
+          <form @submit.prevent="onSubmit" enctype="multipart/form-data">
+            <div>
+              <div class="form-group mb-4">
+                <label for="title">Titre</label>
+                <input
+                  name="title"
+                  class="form-control"
+                  type="text"
+                  v-model="form.title"
+                />
+              </div>
 
-          <input :disabled="!isFormValid" type="submit" class="btn btn-primary m-1" value="Publier / Mettre à jour" />
-        </form>
+              <div class="ml-2 col-sm-6">
+                <div id="msg"></div>
+                <form method="post" id="image-form">
+                  <input
+                    type="file"
+                    name="img[]"
+                    class="file"
+                    accept="image/*"
+                  />
+                  <div class="input-group my-3">
+                    <input
+                      type="text"
+                      class="form-control"
+                      disabled
+                      placeholder="Upload File"
+                      id="file"
+                    />
+                    <div class="input-group-append">
+                      <button
+                        type="button"
+                        class="browse btn btn-primary"
+                        @click="browse()"
+                      >
+                        Browse...
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+              <div class="ml-2 col-sm-6">
+                <img
+                  :src="form.image_url"
+                  id="preview"
+                  class="img-thumbnail"
+                />
+              </div>
+              <div class="form-group mb-4">
+                <label for="body">Contenu</label>
+                <textarea
+                  name="body"
+                  class="form-control"
+                  rows="3"
+                  v-model="form.body"
+                ></textarea>
+              </div>
+            </div>
+
+            <input
+              v-if="editionMode"
+              :disabled="!isFormValid"
+              type="submit"
+              class="btn btn-primary m-1"
+              value="Mettre à jour"
+            />
+            <input
+              v-else
+              :disabled="!isFormValid"
+              type="submit"
+              class="btn btn-primary m-1"
+              value="Publier"
+            />
+          </form>
+        </div>
       </div>
     </div>
   </div>
