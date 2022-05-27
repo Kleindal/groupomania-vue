@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router';
-
 </script>
 
 <template>
+
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <RouterView />
 
@@ -71,6 +71,9 @@ body {
 .btn-secondary {
   background-color: var(--third-color)!important;
   border: none!important;
+}
+.btn-primary, .btn-secondary {
+  width: fit-content!important;
 }
 div {
   position: relative;
@@ -170,38 +173,33 @@ div {
 
 
 @media only screen and (max-width: 960px) {
-  .cards-about {
-    flex-direction: column;
-  }
+
 }
 
 @media only screen and (max-width: 600px) {
-  .container {
-    height: auto;
-    max-width: 100%;
+  .card {
+    min-width: 320px!important;
+    margin: 0;
   }
-  .container div {
-    height: auto;
-    max-width: 90%;
+  .card-header .author {
+    display: none!important;
+  }
+  .card-title {
+    text-align: left!important;
+  }
+  /* .card-image img {
+    min-width: 300px!important;
+  } */
+  .comment button {
+    display: flex;
+    align-content: center;
   }
 }
 
 @media only screen and (max-width: 300px) {
-  .App-logo img {
-    height: auto;
-    max-width: 100%;
-  }
+
 }
 
-.nav-header {
-  height: 2.5em;
-}
-
-.container-space, .container-space > div {
-  height: calc(100% - 5em);
-  /* display: flex; */
-  /* justify-content: space-evenly; */
-}
 
 </style>
 

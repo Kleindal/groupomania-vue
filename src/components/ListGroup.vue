@@ -1,11 +1,5 @@
 <script lang="js">
-import { useGlobalStore } from '@/stores/global';
 import { RouterLink } from 'vue-router';
-
-const token = localStorage.getItem('token');
-const config = {
-    headers: { Authorization: `Bearer ${token}` }
-};
 
 export default {
   data() {
@@ -15,7 +9,7 @@ export default {
     }
   },
   async created() {
-    const {data} = await this.axios.get('http://localhost:3006/api/groups', config);
+    const {data} = await this.axios.get('http://localhost:3006/api/groups');
     this.groups = data;
   },
   methods: {
@@ -28,8 +22,8 @@ export default {
 </script>
 
 <template>
-  <div class="col-12 d-none d-md-block">
-    <div class="list-group text-center d-flex">
+  <div class="col-12 d-none d-lg-block">
+    <div class="list-group text-center d-flex justify-content-start">
       <RouterLink v-for="group in groups" :key="group.id" :to="'/' + group.id">
         #{{group.title}}
       </RouterLink>

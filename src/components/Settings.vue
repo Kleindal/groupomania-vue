@@ -1,8 +1,6 @@
 <script lang="js">
-const token = localStorage.getItem('token');
-const config = {
-    headers: { Authorization: `Bearer ${token}` }
-};
+import { AuthService } from '@/services/auth.service';
+
 export default {
   data() {
     return {
@@ -12,8 +10,8 @@ export default {
   },
   methods: {
     disconnect: function() {
-      localStorage.removeItem('userId');
-      localStorage.removeItem('token');
+      const authService = new AuthService();
+      authService.logout();
       this.$router.push('/login');
     },
     async onSubmit() {
@@ -42,13 +40,16 @@ export default {
 
 <template>
   <div class="col-12 col-md-9 col-lg-10 text-left">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-12 col-md-6 text-left">
-          <div class="btn btn-warning" @click="disconnect()">
+    <div class="container text-left">
+      <div class="row settings">
+        <h2>Settings</h2>
+          <div class="btn btn-secondary disconnect" @click="disconnect()">
             Se déconnecter
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
+              <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+            </svg>
           </div>
-          <hr />
           <div class="edit-profile">
             <h3>Changer votre mot de passe</h3>
           </div>
@@ -85,12 +86,11 @@ export default {
               value="Submit"
             />
           </form>
-          <hr />
           <h3>Gérer mon compte</h3>
           <div class="btn btn-danger" @click="deleteMyAccount">
             Supprimer mon compte
           </div>
-        </div>
+
       </div>
     </div>
   </div>

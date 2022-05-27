@@ -4,6 +4,7 @@ import ListGroup from '@/components/ListGroup.vue';
 import ListPost from '@/components/ListPost.vue';
 import EditPost from '@/components/EditPost.vue';
 import { useGlobalStore } from '@/stores/global';
+import { UserService } from '@/services/user.service';
 const token = localStorage.getItem('token');
 const config = {
     headers: { Authorization: `Bearer ${token}` }
@@ -12,6 +13,7 @@ export default {
   data() {
     return {
       selectedGroup: null,
+      userService: null,
     }
   },
   components: {
@@ -20,14 +22,12 @@ export default {
     EditPost
   },
   async created() {
-    let results;
-    results = await this.axios.get('http://localhost:3006/api/users', config);
-    this.users = results.data;
-    const store = useGlobalStore();
-    store.$patch({users: results.data});
+    this.userService = new UserService();
+    await this.userService.loadUser();
 
-    results = await this.axios.get('http://localhost:3006/api/groups', config);
-    this.groups = results.data;;
+    const results = await this.axios.get('http://localhost:3006/api/groups', config);
+    this.groups = results.data;
+    const store = useGlobalStore();
     store.$patch({groups: results.data});
     this.selectedGroup = store.groups.filter(group => group.id == this.$route.params.id)[0];
   },
@@ -131,7 +131,7 @@ export default {
   </div>
 
   <div class="container-fluid adaptative">
-    <div class="row">
+    <div class="row d-flex justify-content-center">
       <list-group @selectedGroup="selectGroup($event)"></list-group>
       <router-view></router-view>
       <!-- <edit-post></edit-post> -->

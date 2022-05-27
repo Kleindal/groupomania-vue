@@ -1,4 +1,5 @@
 <script lang="js">
+import { AuthService } from '@/services/auth.service';
 import { RouterLink } from 'vue-router';
 
 
@@ -16,7 +17,6 @@ export default {
         return {
             email: '',
             password: '',
-            keepConnected: false
         }
     },
     methods: {
@@ -24,16 +24,12 @@ export default {
         let userForm = {
           email: this.email,
           password: this.password,
-          keepConnected: this.keepConnected
         }
         try {
-          const {data} = await this.axios.post('http://localhost:3006/api/sign/in', userForm);
-          localStorage.setItem('userId', data.userId);
-          localStorage.setItem('token', data.token);
+          await (new AuthService()).login(userForm);
           this.$router.push('/')
         } catch (e) {
           this.password = '';
-          this.keepConnected = false;
           alert('Mauvais identifiants');
         }
       }
@@ -72,10 +68,6 @@ export default {
           placeholder="Entrez votre mot de passe"
           v-model="password"
         />
-      </div>
-      <div class="form-group mb-3">
-        <label for="keepConnected">Rester connecté</label>
-        <input type="checkbox" name="keepConnected" v-model="keepConnected" />
       </div>
       <input
         :disabled="!email || !password"
