@@ -35,8 +35,7 @@ app.use(router)
 const authService = new AuthService();
 const userService = new UserService();
 if (authService.getToken()) {
-  await userService.loadUser()
-  .then(() => app.mount('#app'));
+  userService.loadUser().then(() => app.mount('#app'));
 } else {
   app.mount('#app');
 }

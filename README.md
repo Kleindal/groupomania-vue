@@ -1,46 +1,53 @@
-# groupomania-vue
+<p align="center">
+  <a href="#">
+    <img src="https://user.oc-static.com/upload/2022/05/25/1653474647318_icon-left-font.png" width="auto" height="192px"/>
+  </a>
+</p>
 
-This template should help get you started developing with Vue 3 in Vite.
+<h1 align="center">
+  Web Application: Créez un réseau social d’entreprise
+</h1>
 
-## Recommended IDE Setup
+<p align="center">
+  Réalisation d'une <strong>Application de publication de postes</strong> avec des fonctions basiques.
+  <br />
+  <br />
+</p>
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.vscode-typescript-vue-plugin).
+## 👩‍💻 Explication du projet
 
-## Type Support for `.vue` Imports in TS
+L'objectif de ce projet est de créer une API reprendrant les concepts de base d'une application de publication de posts (type Workplace, Reddit, 9gag), pour l'entreprise Groupomania. Les utilisateurs pourront alors publier leurs propres posts pouvant contenir à la fois du texte et des images.
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+Ce projet a été réalisé en :
+   - [VueJS 3](https://vuejs.org/guide/quick-start.html)
+   - [NodeJS](https://nodejs.org/en/about/releases/)
+   - [Express](https://expressjs.com/fr/starter/installing.html)
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
 
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+## 🚀 Requirement
+- npm@8.6.0
+- node@v16.13.1
 
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
+### 🐳 Installation
+Une fois l'enrivonnement installé :
+```
+git clone https://github.com/Kleindal/groupomania-vue.git
+cd groupomania-vue
 npm install
 ```
 
-### Compile and Hot-Reload for Development
-
-```sh
+### 🚀 Démarrer l'application
+Démarrer le server backend
+```ssh
 npm run dev
 ```
+Le serveur sera accessible sur l'url http://localhost:3000/
 
+### ⭐ Extra
 ### Type-Check, Compile and Minify for Production
 
 ```sh
 npm run build
 ```
 
-### Lint with [ESLint](https://eslint.org/)
 
-```sh
-npm run lint
-```
