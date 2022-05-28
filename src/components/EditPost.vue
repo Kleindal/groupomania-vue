@@ -77,36 +77,34 @@ export default {
 
 -->
 
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-12 col-md-6 text-lefts">
-        <div >
+  <div class="container-fluid col-10 justify-content-start">
+    <div class="edit-post">
+    <div class="row">
+        <div class="edit-post-style">
+          <h3 v-if="editionMode">Éditer un post</h3>
+          <h3 v-else>Créer un post</h3>
+        </div>
+        <form @submit.prevent="onSubmit" enctype="multipart/form-data">
           <div>
-            <h3 v-if="editionMode">Éditer un post</h3>
-            <h3 v-else>Créer un post</h3>
-          </div>
-          <form @submit.prevent="onSubmit" enctype="multipart/form-data">
-            <div>
-              <label for="title">Titre</label>
-              <input name="title" class="form-control" type="text" v-model="form.title" />
-
-              <div id="msg"></div>
-              <form method="post" id="image-form">
-                <input type="file" name="img[]" class="file" accept="image/*" />
-                <div class="input-group my-3"><input type="text" class="form-control" disabled placeholder="Upload File" id="file" />
-                  <div class="input-group-append"><button type="button" class="browse btn btn-primary" @click="browse()" >Browse... </button></div>
-                </div>
-              </form>
-              <img :src="form.image_url" id="preview" class="img-thumbnail" />
-              <div class="mb-4">
-                <label for="body">Contenu</label>
-                <textarea name="body" class="form-control" rows="3" v-model="form.body" ></textarea>
+            <label for="title">Titre</label>
+            <input name="title" class="form-control" type="text" v-model="form.title" />
+            <div id="msg"></div>
+            <form method="post" id="image-form">
+              <input type="file" name="img[]" class="file" accept="image/*" />
+              <div class="input-group my-3"><input type="text" class="form-control" disabled placeholder="Upload File" id="file" />
+                <div class="input-group-append"><button type="button" class="browse btn btn-primary" @click="browse()" >Browse... </button></div>
+              </div>
+            </form>
+            <img :src="form.image_url" id="preview" class="img-thumbnail" />
+            <div class="mb-4">
+              <label for="body">Contenu</label>
+              <textarea name="body" class="form-control" rows="3" v-model="form.body" ></textarea>
               </div>
             </div>
             <input v-if="editionMode" :disabled="!isFormValid" type="submit" class="btn btn-primary m-1" value="Mettre à jour" />
             <input v-else :disabled="!isFormValid" type="submit" class="btn btn-primary m-1" value="Publier" />
           </form>
-        </div>
+
       </div>
     </div>
   </div>
@@ -114,9 +112,14 @@ export default {
 
 <style>
 
-.edit-profile {
-  width: 600px!important;
+.edit-post {
+  max-width: 600px!important;
 }
+
+.edit-post-style {
+  margin-bottom: 40px;
+}
+
 .file {
   visibility: hidden;
   position: absolute;

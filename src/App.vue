@@ -18,6 +18,9 @@ import { RouterView } from 'vue-router';
   /* border: 2px solid red; */
   box-sizing: border-box;
 }
+ul {
+  padding: 0px!important;
+}
 
 a:link {
   text-decoration: none;
@@ -54,10 +57,6 @@ a:link {
   /*  */
 }
 
-.main-header {
-  width: 100%;
-  margin: 0;
-}
 
 body {
   font-family: Inter, Verdana, Geneva, Tahoma, sans-serif!important;
@@ -157,7 +156,6 @@ div {
   margin: 20px;
 }
 
-
 .file-name {
   cursor: pointer;
   padding: 0px 12px;
@@ -196,8 +194,12 @@ div {
   }
 }
 
-@media only screen and (max-width: 300px) {
+@media only screen and (max-width: 768px) {
+.card-post-about {
+  margin-left: 0px;
+  width: 100%!important;
 
+}
 }
 
 

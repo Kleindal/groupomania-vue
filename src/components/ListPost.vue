@@ -59,75 +59,72 @@ export default {
       const store = useGlobalStore();
       return store.connectedUser.is_admin || createdBy == store.connectedUser.id;
     }
-  },
-  computed: {
-
   }
 }
 </script>
 
 <template>
-  <div v-if="posts.length" class="col-12 text-center">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-12 justify-content-end" v-for="post in posts" :key="post.id">
-          <div class="card-post-about d-flex-shrink">
-            <div class="card post">
-            <div class="card-header d-flex align-items-center justify-content-evenly">
-              <div class="author">
-                <img v-if="post.author_image_url" :src="post.author_image_url" alt="" />
-                <svg v-else xmlns="http://www.w3.org/2000/svg"  width="50" height="50" fill="#FD2D01" class="bi bi-person" viewBox="0 0 16 16">
-                  <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
-                </svg>
-              </div>
-              <div class="card-title">
-                <h5>{{ post.title }}</h5>
-                <h6>
-                Posté par {{ post.author_fullname }} le
-                {{ new Date(post.created_at).toLocaleString() }}
-                </h6>
-              </div>
+  <div v-if="posts.length">
+    <div class="d-flex justify-content-center" v-for="post in posts" :key="post.id">
+      <div class="card post card-post-about">
+      <div class="card-header d-flex align-items-center justify-content-evenly">
+        <div class="author">
+          <img v-if="post.author_image_url" :src="post.author_image_url" alt="" />
+          <svg v-else xmlns="http://www.w3.org/2000/svg"  width="50" height="50" fill="#FD2D01" class="bi bi-person" viewBox="0 0 16 16">
+            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+          </svg>
+        </div>
+        <div class="card-title">
+          <h5>{{ post.title }}</h5>
+          <h6>
+          Posté par {{ post.author_fullname }} le
+          {{ new Date(post.created_at).toLocaleString() }}
+          </h6>
+        </div>
 
-            </div>
-            <div class="card-body align-items-center">
+      </div>
+      <div class="card-body">
 
-              <div class="card-image">
-                <img :src="post.image_url" alt="" />
-              </div>
-              <p class="card-text">
-                {{ post.body }}
-              </p>
-            </div>
-            <div class="card-footer">
-              <div class="comment text-center d-flex align-items-center justify-content-md-between">
-                <a class="btn btn-primary " @click="likeOrUnlikePost(post)" >
-                  <svg v-if="post.connected_user_has_liked" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-balloon-heart-fill" viewBox="0 0 16 16" >
-                    <path fill-rule="evenodd" d="M8.49 10.92C19.412 3.382 11.28-2.387 8 .986 4.719-2.387-3.413 3.382 7.51 10.92l-.234.468a.25.25 0 1 0 .448.224l.04-.08c.009.17.024.315.051.45.068.344.208.622.448 1.102l.013.028c.212.422.182.85.05 1.246-.135.402-.366.751-.534 1.003a.25.25 0 0 0 .416.278l.004-.007c.166-.248.431-.646.588-1.115.16-.479.212-1.051-.076-1.629-.258-.515-.365-.732-.419-1.004a2.376 2.376 0 0 1-.037-.289l.008.017a.25.25 0 1 0 .448-.224l-.235-.468ZM6.726 1.269c-1.167-.61-2.8-.142-3.454 1.135-.237.463-.36 1.08-.202 1.85.055.27.467.197.527-.071.285-1.256 1.177-2.462 2.989-2.528.234-.008.348-.278.14-.386Z" />
-                  </svg>
-                  <svg v-else xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-balloon-heart" viewBox="0 0 16 16" >
-                    <path fill-rule="evenodd" d="m8 2.42-.717-.737c-1.13-1.161-3.243-.777-4.01.72-.35.685-.451 1.707.236 3.062C4.16 6.753 5.52 8.32 8 10.042c2.479-1.723 3.839-3.29 4.491-4.577.687-1.355.587-2.377.236-3.061-.767-1.498-2.88-1.882-4.01-.721L8 2.42Zm-.49 8.5c-10.78-7.44-3-13.155.359-10.063.045.041.089.084.132.129.043-.045.087-.088.132-.129 3.36-3.092 11.137 2.624.357 10.063l.235.468a.25.25 0 1 1-.448.224l-.008-.017c.008.11.02.202.037.29.054.27.161.488.419 1.003.288.578.235 1.15.076 1.629-.157.469-.422.867-.588 1.115l-.004.007a.25.25 0 1 1-.416-.278c.168-.252.4-.6.533-1.003.133-.396.163-.824-.049-1.246l-.013-.028c-.24-.48-.38-.758-.448-1.102a3.177 3.177 0 0 1-.052-.45l-.04.08a.25.25 0 1 1-.447-.224l.235-.468ZM6.013 2.06c-.649-.18-1.483.083-1.85.798-.131.258-.245.689-.08 1.335.063.244.414.198.487-.043.21-.697.627-1.447 1.359-1.692.217-.073.304-.337.084-.398Z" />
-                  </svg>
-                  {{ post.like_count }}
-                </a>
-                <div>
-                <button v-if="canEditOrDelete(post.created_by)" @click="edit(post)" class="btn btn-primary m-1">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
-                    <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
-                  </svg>
-                </button>
-                <button v-if="canEditOrDelete(post.created_by)" @click="deletePost(post)" class="btn btn-secondary m-1">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
-                    <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
-                  </svg>
-                </button>
-                </div>
-              </div>
-            </div>
-          </div>
-          </div>
-
+        <div class="card-image">
+          <img :src="post.image_url" alt="" />
+        </div>
+        <div class="card-text">
+          {{ post.body }}
         </div>
       </div>
+      <div class="card-footer">
+        <div class="comment text-center d-flex align-items-center justify-content-between">
+          <div>
+            <a @click="likeOrUnlikePost(post)" >
+            <svg v-if="post.connected_user_has_liked" xmlns="http://www.w3.org/2000/svg" width="35" height="35" class="bi bi-balloon-heart-fill" viewBox="0 0 16 16" >
+              <path fill-rule="evenodd" d="M8.49 10.92C19.412 3.382 11.28-2.387 8 .986 4.719-2.387-3.413 3.382 7.51 10.92l-.234.468a.25.25 0 1 0 .448.224l.04-.08c.009.17.024.315.051.45.068.344.208.622.448 1.102l.013.028c.212.422.182.85.05 1.246-.135.402-.366.751-.534 1.003a.25.25 0 0 0 .416.278l.004-.007c.166-.248.431-.646.588-1.115.16-.479.212-1.051-.076-1.629-.258-.515-.365-.732-.419-1.004a2.376 2.376 0 0 1-.037-.289l.008.017a.25.25 0 1 0 .448-.224l-.235-.468ZM6.726 1.269c-1.167-.61-2.8-.142-3.454 1.135-.237.463-.36 1.08-.202 1.85.055.27.467.197.527-.071.285-1.256 1.177-2.462 2.989-2.528.234-.008.348-.278.14-.386Z" />
+            </svg>
+            <svg v-else xmlns="http://www.w3.org/2000/svg" width="35" height="35" class="bi bi-balloon-heart" viewBox="0 0 16 16" >
+              <path fill-rule="evenodd" d="m8 2.42-.717-.737c-1.13-1.161-3.243-.777-4.01.72-.35.685-.451 1.707.236 3.062C4.16 6.753 5.52 8.32 8 10.042c2.479-1.723 3.839-3.29 4.491-4.577.687-1.355.587-2.377.236-3.061-.767-1.498-2.88-1.882-4.01-.721L8 2.42Zm-.49 8.5c-10.78-7.44-3-13.155.359-10.063.045.041.089.084.132.129.043-.045.087-.088.132-.129 3.36-3.092 11.137 2.624.357 10.063l.235.468a.25.25 0 1 1-.448.224l-.008-.017c.008.11.02.202.037.29.054.27.161.488.419 1.003.288.578.235 1.15.076 1.629-.157.469-.422.867-.588 1.115l-.004.007a.25.25 0 1 1-.416-.278c.168-.252.4-.6.533-1.003.133-.396.163-.824-.049-1.246l-.013-.028c-.24-.48-.38-.758-.448-1.102a3.177 3.177 0 0 1-.052-.45l-.04.08a.25.25 0 1 1-.447-.224l.235-.468ZM6.013 2.06c-.649-.18-1.483.083-1.85.798-.131.258-.245.689-.08 1.335.063.244.414.198.487-.043.21-.697.627-1.447 1.359-1.692.217-.073.304-.337.084-.398Z" />
+            </svg>
+
+          </a>
+          {{ post.like_count }}
+          </div>
+
+
+          <div>
+          <button v-if="canEditOrDelete(post.created_by)" @click="edit(post)" class="btn btn-primary m-1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+              <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
+            </svg>
+          </button>
+          <button v-if="canEditOrDelete(post.created_by)" @click="deletePost(post)" class="btn btn-secondary m-1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+              <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
+            </svg>
+          </button>
+          </div>
+        </div>
+      </div>
+      </div>
+
+
     </div>
   </div>
   <div v-else class="col-12 col-md-9 col-lg-10 text-center">
@@ -136,7 +133,7 @@ export default {
     <h6 class="btn btn-primary">
       <RouterLink style="color: white" :to="{ name: 'create-post', params: { selectedGroup }}">
       Créer
-      <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+      <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pencil-square" >
         <path
           d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
         />
@@ -164,8 +161,12 @@ export default {
 
 .card-post-about {
   margin-bottom: 3em;
-  max-height: 800px;
-  max-width: 90%;
+  max-height: auto;
+  max-width: 900px;
+  width: 80%;
+  margin-left: auto;
+  box-shadow: 1px 10px 20px var(--secondary-color)!important;
+
 }
 
 .card-header {
@@ -184,13 +185,25 @@ export default {
 }
 .card-image {
   text-align: center;
-  padding: 1em;
 }
-
-.card-image img, .card-body {
+.card-image img {
   max-width: 90%;
+  margin: auto;
   width: auto;
 }
+.card-footer {
+  padding: 30px!important;
+}
+.card-footer .btn {
+  height: 40px;
+  width: 40px;
+}
 
+.comment{
+  fill: var(--primary-color)!important;
+}
+.card-text {
+  margin: 25px 15px 35px 15px !important;
+}
 
 </style>
