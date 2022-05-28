@@ -1,4 +1,5 @@
 <script lang="js">
+import { useGlobalStore } from '@/stores/global';
 import { RouterLink } from 'vue-router';
 
 export default {
@@ -9,8 +10,7 @@ export default {
     }
   },
   async created() {
-    const {data} = await this.axios.get('http://localhost:3006/api/groups');
-    this.groups = data;
+    this.groups = (useGlobalStore()).groups;
   },
   methods: {
     selectGroup: function(group) {
@@ -22,12 +22,13 @@ export default {
 </script>
 
 <template>
-  <div class="col-12 d-none d-md-block">
-    <div class="list-group text-center">
-      <RouterLink v-for="group in groups" :key="group.id" :to="'/' + group.id">
-        #{{group.title}}
-      </RouterLink>
-    </div>
+  <div class="list-group text-center">
+    <RouterLink
+      v-for="group in groups"
+      :key="group.id" :to="'/' + group.id"
+    >
+      #{{group.title}}
+    </RouterLink>
   </div>
 </template>
 
@@ -38,6 +39,7 @@ export default {
     position: fixed;
     padding: 15px!important;
     width: 200px;
+    z-index: 1!important;
   }
 
   .list-group a {
@@ -49,7 +51,7 @@ export default {
     border-left: 1px solid var(--third-color)!important;
   }
 
-  .list-group a:active, .list-group a:focus {
+  .list-group > .router-link-active, .list-group a:hover {
     border-left: 10px solid var(--primary-color)!important;
     color: var(--primary-color);
   }

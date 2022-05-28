@@ -1,5 +1,6 @@
 import { useGlobalStore } from '@/stores/global';
 import axios from 'axios';
+import { InitService } from './init.service';
 
 
 export class AuthService {
@@ -7,6 +8,7 @@ export class AuthService {
     const {data} = await axios.post('http://localhost:3006/api/sign/in', userForm);
     localStorage.setItem('userId', data.userId);
     localStorage.setItem('token', data.token);
+    (new InitService()).initApp();
   }
 
   logout(): void {

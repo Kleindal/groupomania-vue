@@ -15,7 +15,6 @@ import { RouterView } from 'vue-router';
 
 
 * {
-  /* border: 2px solid red; */
   box-sizing: border-box;
 }
 ul {
@@ -50,19 +49,22 @@ a:link {
 
   /* font */
   --font-s: 12px "Lato", "Arial", "Helvetica", sans-serif;
-  --font-md: 14px "Lato", "Arial", "Helvetica", sans-serif;
-  --font-lg: 20px "Lato", "Arial", "Helvetica", sans-serif;
+  --font-md: 17px "Lato", "Arial", "Helvetica", sans-serif;
+  --font-lg: 22px "Lato", "Arial", "Helvetica", sans-serif;
   --font-xl: bold 26px Lato, "Arial", "Helvetica", sans-serif;
-  --font-title: bold 20px Lato, "Arial", "Helvetica", sans-serif;
+  --font-title: bold 22px Lato, "Arial", "Helvetica", sans-serif;
   /*  */
 }
 
-
 body {
-  font-family: Inter, Verdana, Geneva, Tahoma, sans-serif!important;
+  font-family: Lato, Inter, Verdana, Tahoma, sans-serif!important;
   width: auto;
+  min-width: 360px!important;
 }
-
+div {
+  font-size: 17px!important;
+}
+/* BUTTONS STYLE */
 .btn-primary {
   background-color: var(--primary-color)!important;
   border: none!important;
@@ -74,21 +76,37 @@ body {
 .btn-primary, .btn-secondary {
   width: fit-content!important;
 }
-div {
-  position: relative;
+
+/* NAVBAR HOME STYLE */
+.navbar {
+  /* border-bottom: 1px solid #b1b1b1; */
+  padding: 20px 0!important;
+  box-shadow: 1px 10px 25px #c5c5c5ce;
 }
-.fix-footer {
-  overflow-y: hidden;
-  position: absolute;
-  bottom: 0;
-  height: 2.5rem;
-  width: 100%;
-  text-align: center;
-  background-position: bottom;
-  background-repeat: repeat;
-  color: var(--text-color2);
+.offcanvas-body li {
+  font: var(--font-lg);
+  margin: 20px 30px 30px;
+}
+.groupomania-logo {
+  width: 20px;
+}
+.icons-nav svg {
+  margin: 0px 25px;
+  height: 35px;
+  width: 35px;
+  color: var(--third-color);
+  padding: 2px;
+}
+.icons-nav svg:hover {
+  margin-bottom: 2px;
+  padding: 0px;
+}
+.adaptative {
+    margin-top: 7em;
+    max-width: 800px!important;
 }
 
+/* LOGIN AND SIGN STYLE */
 .App-logo {
   height: auto;
   width: 290px;
@@ -96,82 +114,86 @@ div {
   pointer-events: none;
   margin: 1em 0px;
 }
-.title-hype {
+.title-sign {
   text-transform: uppercase;
   line-height: 1.2em!important;
   font: var(--font-xl);
-  margin: 30px 0;
+  margin: 1em 0px 2em;
   color: #333333;
 }
-.home-connect, #login-page, #signup-page, .presentation {
+#login-page, #signup-page, .presentation {
   display: flex;
   justify-items: center;
-  align-content: center;
   flex-direction: column;
-  flex-wrap: wrap;
   width: auto;
   height: auto;
 }
-.home-connect, #login-page, #signup-page {
-  min-height: 100vh;
+#login-page, #signup-page {
+  height: 100%;
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
-
 }
-.connect-page {
-  display: flex;
-  align-items: center;
-  justify-items: center;
-  flex-direction: column;
+form .form-group label {
+  color: var(--third-color);
+  font: var(--font-md);
+  font-weight: bold;
 }
-.connect-page > div {
-  padding: 10px;
-  margin-bottom: 10px;
+form .form-group {
+  margin-bottom: 1em!important;
+  font: var(--font-md);
+  line-height: 2em;
 }
-
-.signup a, .login a {
-  font-weight: 700;
+form .btn-primary {
+  width: 100%!important;
+}
+.redirect-sign {
+  margin-top: 1em;
+  border-bottom: 1px solid;
+}
+/* BACKGROUND LOGIN & SIGNUP */
+.card-effect {
+  background-color: white;
+  border-radius: 15px;
+  height: auto;
+  width: auto;
+  margin: 3em;
+  padding: 3em;
+  box-shadow: 1px 15px 50px rgba(222, 222, 222, 0.805);
+}
+.card-effect-footer {
+  margin: 2em 0 0em 0!important;
+  color: var(--third-color);
+}
+#background-overlay {
+    background-image: url('https://img.freepik.com/free-vector/cut-out-paper-design-style-gray-abstract-background-gray-papercut-background-presentation-cover-banner-website-template-vector-illustration_87521-3904.jpg?w=1480&t=st=1653731936~exp=1653732536~hmac=bbe5087cb9f16daecca14323a4b69da1f442b2dc28470e1cfa3f44926229541a')!important;
+    width: 100vw;
+    height: 100vh;
+    background-size: cover;
+}
+.bg-over {
+  background-image:
+  linear-gradient(to bottom, #ffffffef, rgba(227, 227, 227, 0.851));
+  width: 100vw;
+  height: 100vh;
+  background-size: cover;
   color: white;
-  background-color: var(--primary-button);
-  font: var(--font-lg);
-  border-radius: 25px;
-  padding: var(--button-padding);
-  -webkit-border-radius: 25px;
-  -moz-border-radius: 25px;
-  -ms-border-radius: 25px;
-  -o-border-radius: 25px;
+  padding: 20px;
 }
 
-.signup a:hover, .login a:hover {
-  transition-duration: 200ms;
-  transition-property: background-color, border;
-  transition-timing-function: ease-in-out;
-  background-color: var(--secondary-button);
-  color: white;
+/* LIST POST */
+.group-title {
+  color: var(--primary-color);
+  text-align: center;
+  margin: 1em 0px 2em 0px!important;
 }
-
-.nav-header {
-  margin: 20px;
+/* RESPONSIVES MEDIA QUERIES */
+@media only screen and (max-width: 768px) {
+.card-post-about {
+  margin-left: 0px;
+  width: 100%!important;
 }
-
-.file-name {
-  cursor: pointer;
-  padding: 0px 12px;
-  width: max-content;
-  background-color: var(--primary-button);
-  color: white;
-  border-radius: 10px;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  -ms-border-radius: 10px;
-  -o-border-radius: 10px;
-}
-
-
-@media only screen and (max-width: 960px) {
-
 }
 
 @media only screen and (max-width: 600px) {
@@ -192,16 +214,21 @@ div {
     display: flex;
     align-content: center;
   }
+  .card-effect {
+    border-radius: 0;
+    height: 100vh;
+    width: 100vw;
+  }
 }
 
-@media only screen and (max-width: 768px) {
-.card-post-about {
-  margin-left: 0px;
-  width: 100%!important;
-
+@media only screen and (max-width: 360px) {
+  .group-title {
+    text-align: center;
+  }
+  :root {
+    --font-md: 20px;
+  }
 }
-}
-
 
 </style>
 

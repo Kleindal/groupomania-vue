@@ -66,34 +66,14 @@ export default {
             <div>
               <div class="form-group mb-4">
                 <label for="password">Nouveau mot de passe</label>
-                <input
-                  name="password"
-                  class="form-control"
-                  type="password"
-                  placeholder="Entrez votre nouveau mot de passe"
-                  v-model="password"
-                />
+                <input name="password" class="form-control" type="password" placeholder="Entrez votre nouveau mot de passe" v-model="password" />
               </div>
               <div class="form-group mb-4">
-                <label for="confirmPassword"
-                  >Confirmez nouveau mot de passe</label
-                >
-                <input
-                  name="confirmPassword"
-                  class="form-control"
-                  type="password"
-                  placeholder="Entrez votre nouveau mot de passe"
-                  v-model="confirmPassword"
-                />
+                <label for="confirmPassword" >Confirmez nouveau mot de passe</label>
+                <input name="confirmPassword" class="form-control" type="password" placeholder="Entrez votre nouveau mot de passe" v-model="confirmPassword" />
               </div>
             </div>
-
-            <input
-              :disabled="!isFormValid"
-              type="submit"
-              class="btn btn-primary m-1"
-              value="Submit"
-            />
+            <input :disabled="!isFormValid" type="submit" class="btn btn-primary m-1" value="Submit" />
           </form>
           <h3>Gérer mon compte</h3>
           <p>Cette action est irréversible !</p>
@@ -111,11 +91,9 @@ export default {
 .settings-title {
   margin: 2em 0px!important;
 }
-
 .disconnect {
   margin-bottom: 2em!important;
 }
-
 .form-password {
   height: 30vh;
 }

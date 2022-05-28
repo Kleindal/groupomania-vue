@@ -49,7 +49,9 @@ export default {
     async onSubmit() {
       var file = document.querySelector('.file');
       let formData = new FormData();
-      formData.append("file", file.files.item(0));
+      if (file.files.length) {
+        formData.append("file", file.files.item(0));
+      }
       formData.append("title", this.form.title);
       formData.append("body", this.form.body);
       formData.append("group_id", this.selectedGroup);
@@ -98,13 +100,12 @@ export default {
             <img :src="form.image_url" id="preview" class="img-thumbnail" />
             <div class="mb-4">
               <label for="body">Contenu</label>
-              <textarea name="body" class="form-control" rows="3" v-model="form.body" ></textarea>
+              <textarea name="body" class="form-control" rows="3" v-model="form.body"></textarea>
               </div>
             </div>
             <input v-if="editionMode" :disabled="!isFormValid" type="submit" class="btn btn-primary m-1" value="Mettre à jour" />
             <input v-else :disabled="!isFormValid" type="submit" class="btn btn-primary m-1" value="Publier" />
           </form>
-
       </div>
     </div>
   </div>

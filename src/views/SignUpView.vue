@@ -45,28 +45,29 @@ export default {
 </script>
 
 <template>
- <div id="signup-page" class="col-md-8 col-lg-6 col-xl-5">
-       <form @submit.prevent="onSubmit">
-             <div class="presentation">
-                <img src="../assets/logo.svg" class="App-logo" alt="logo" />
-                <p class="text-muted mb-4">Inscrivez vous pour continuer</p>
+  <div id="background-overlay">
+    <div class="bg-over">
+      <div id="signup-page">
+        <div class="card-effect">
+          <form @submit.prevent="onSubmit">
+            <div class="presentation">
+              <img src="../assets/logo.svg" class="App-logo" alt="logo" />
+              <p class="text-muted mb-4">Inscrivez vous pour continuer</p>
             </div>
-            <div class="title-hype wslide">
-            <div>
-                <span>S'inscrire</span>
-            </div>
+            <div class="title-sign">
+              <span>S'inscrire</span>
             </div>
             <div class="form-group mb-3">
-                <label for="surname">Prénom</label>
-                <input name="surname" class="form-control" type="text" placeholder="Entrez surname" v-model="surname" />
+              <label for="surname">Prénom</label>
+              <input name="surname" class="form-control" type="text" placeholder="Entrez votre prénom"  aria-labelledby="Entrez votre prénom" v-model="surname" />
             </div>
             <div class="form-group mb-1">
-                <label for="name">Nom</label>
-                <input name="name" class="form-control" type="text" placeholder="Entrez name" v-model="name" />
+              <label for="name">Nom</label>
+              <input name="name" class="form-control" type="text" placeholder="Entrez votre nom" aria-labelledby="Entrez votre nom" v-model="name" />
             </div>
             <div class="form-group mb-3">
-                <label for="email">Adresse Email</label>
-                <input name="email" class="form-control" type="text" placeholder="Entrez email" v-model="email" />
+              <label for="email">Adresse Email</label>
+              <input name="email" class="form-control" type="text" placeholder="Entrez votre email" aria-labelledby="Entrez votre email" v-model="email" />
             </div>
             <!-- <div class="form-group mb-3">
                 <label for="confirmEmail">Confirmez votre adresse email</label>
@@ -75,19 +76,26 @@ export default {
             </div> -->
             <div class="form-group mb-3">
                 <label for="password">Mot de passe</label>
-                <input name="password" class="form-control" type="password" placeholder="Entrez votre mot de passe" v-model="password" />
+                <input name="password" class="form-control" type="password" placeholder="Entrez votre mot de passe" aria-labelledby="Entrez votre pot de passe" v-model="password" />
                 <small id="passwordHelp" class="form-text text-muted">Ne partagez pas votre mot de passe à qui que ce soit</small>
             </div>
             <div class="form-group mb-3">
                 <label for="confirmPassword">Confirmez Mot de passe</label>
-                <input name="confirmPassword" class="form-control" type="password" placeholder="Entrez votre mot de passe" v-model="confirmPassword" />
+                <input name="confirmPassword" class="form-control" type="password" placeholder="Entrez votre mot de passe" aria-labelledby="Confirmer votre mot de passe" v-model="confirmPassword" />
             </div>
             <div class="form-group mb-3">
                 <label for="cguAccepted">Je confirme les CGU, lien.</label>
-                <input type="checkbox" name="cguAccepted" v-model="cguAccepted"/>
+                <input type="checkbox" name="cguAccepted" aria-labelledby="Accpetez les CGU" v-model="cguAccepted"/>
             </div>
-            <input :disabled="!isFormValid" type="submit" class="btn btn-primary m-1" value="Submit" />
-        </form>
-        <router-link to="/login" class="m-1">Se connecter</router-link>
+            <input :disabled="!isFormValid" type="submit" class="btn btn-primary m-1" aria-labelledby="S'inscire" value="S'inscrire" />
+          </form>
+          <div class="card-effect-footer">
+            <router-link to="/login" class="redirect-sign">Se connecter</router-link>
+          </div>
+        </div>
+
+      </div>
     </div>
+  </div>
+
 </template>

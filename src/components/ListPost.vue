@@ -4,6 +4,7 @@ import { useGlobalStore } from '@/stores/global';
 export default {
   data() {
     return {
+      selectedGroupId: null,
       selectedGroup: null,
       posts: [],
       is_admin: localStorage.getItem('is_admin'),
@@ -11,18 +12,22 @@ export default {
     }
   },
   async created() {
-    this.selectedGroup = this.$route.params.id;
-    await this.loadGroupPosts(this.$route.params.id);
+    await this.refreshPage();
   },
   watch: {
-    $route (to, from){
-      this.selectedGroup = to.params.id;
-      this.loadGroupPosts(to.params.id);
+    async $route (to, from){
+      await this.refreshPage();
     }
   },
   methods: {
+    async refreshPage() {
+      this.selectedGroupId = this.$route.params.id;
+      await this.loadGroupPosts(this.$route.params.id);
+      const store = useGlobalStore();
+      this.selectedGroup = store.groups.filter(group => group.id == this.selectedGroupId)[0];
+    },
     loadGroupPosts: async function(id) {
-        const {data} = await this.axios.get('http://localhost:3006/api/groups/' + this.selectedGroup + '/posts?order=desc');
+        const {data} = await this.axios.get('http://localhost:3006/api/groups/' + this.selectedGroupId + '/posts?order=desc');
         const globalStore = useGlobalStore();
         this.posts = [];
         data.forEach(post => {
@@ -40,20 +45,20 @@ export default {
     },
     likeOrUnlikePost: async function(post) {
       if (!post.connected_user_has_liked) {
-        await this.axios.post('http://localhost:3006/api/groups/' + this.selectedGroup + '/posts/' + post.id + '/like', []);
+        await this.axios.post('http://localhost:3006/api/groups/' + this.selectedGroupId + '/posts/' + post.id + '/like', []);
         post.like_count++;
       } else {
-        await this.axios.delete('http://localhost:3006/api/groups/' + this.selectedGroup + '/posts/' + post.id + '/unlike');
+        await this.axios.delete('http://localhost:3006/api/groups/' + this.selectedGroupId + '/posts/' + post.id + '/unlike');
         post.like_count--;
       }
       post.connected_user_has_liked = !post.connected_user_has_liked;
     },
     edit: function(post) {
-      this.$router.push('/' + this.selectedGroup + '/edit-post/' + post.id);
+      this.$router.push('/' + this.selectedGroupId + '/edit-post/' + post.id);
     },
     async deletePost(post) {
-      await this.axios.delete('http://localhost:3006/api/groups/' + this.selectedGroup + '/posts/' + post.id);
-      await this.loadGroupPosts(this.selectedGroup);
+      await this.axios.delete('http://localhost:3006/api/groups/' + this.selectedGroupId + '/posts/' + post.id);
+      await this.loadGroupPosts(this.selectedGroupId);
     },
     canEditOrDelete(createdBy) {
       const store = useGlobalStore();
@@ -64,6 +69,9 @@ export default {
 </script>
 
 <template>
+  <div class="group-title">
+    <h3>#{{ selectedGroup?.title }}</h3>
+  </div>
   <div v-if="posts.length">
     <div class="d-flex justify-content-center" v-for="post in posts" :key="post.id">
       <div class="card post card-post-about">
@@ -81,10 +89,8 @@ export default {
           {{ new Date(post.created_at).toLocaleString() }}
           </h6>
         </div>
-
       </div>
       <div class="card-body">
-
         <div class="card-image">
           <img :src="post.image_url" alt="" />
         </div>
@@ -102,20 +108,17 @@ export default {
             <svg v-else xmlns="http://www.w3.org/2000/svg" width="35" height="35" class="bi bi-balloon-heart" viewBox="0 0 16 16" >
               <path fill-rule="evenodd" d="m8 2.42-.717-.737c-1.13-1.161-3.243-.777-4.01.72-.35.685-.451 1.707.236 3.062C4.16 6.753 5.52 8.32 8 10.042c2.479-1.723 3.839-3.29 4.491-4.577.687-1.355.587-2.377.236-3.061-.767-1.498-2.88-1.882-4.01-.721L8 2.42Zm-.49 8.5c-10.78-7.44-3-13.155.359-10.063.045.041.089.084.132.129.043-.045.087-.088.132-.129 3.36-3.092 11.137 2.624.357 10.063l.235.468a.25.25 0 1 1-.448.224l-.008-.017c.008.11.02.202.037.29.054.27.161.488.419 1.003.288.578.235 1.15.076 1.629-.157.469-.422.867-.588 1.115l-.004.007a.25.25 0 1 1-.416-.278c.168-.252.4-.6.533-1.003.133-.396.163-.824-.049-1.246l-.013-.028c-.24-.48-.38-.758-.448-1.102a3.177 3.177 0 0 1-.052-.45l-.04.08a.25.25 0 1 1-.447-.224l.235-.468ZM6.013 2.06c-.649-.18-1.483.083-1.85.798-.131.258-.245.689-.08 1.335.063.244.414.198.487-.043.21-.697.627-1.447 1.359-1.692.217-.073.304-.337.084-.398Z" />
             </svg>
-
           </a>
           {{ post.like_count }}
           </div>
-
-
-          <div>
+          <div class="d-flex align-items-center justify-content-between">
           <button v-if="canEditOrDelete(post.created_by)" @click="edit(post)" class="btn btn-primary m-1">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
               <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
             </svg>
           </button>
           <button v-if="canEditOrDelete(post.created_by)" @click="deletePost(post)" class="btn btn-secondary m-1">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
               <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
             </svg>
           </button>
@@ -131,7 +134,7 @@ export default {
     <h5>Ce groupe semble vide...</h5>
     <h6>Démarrer un nouveau post ?</h6>
     <h6 class="btn btn-primary">
-      <RouterLink style="color: white" :to="{ name: 'create-post', params: { selectedGroup }}">
+      <RouterLink style="color: white" :to="{ name: 'create-post', params: { selectedGroupId }}">
       Créer
       <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pencil-square" >
         <path
@@ -195,7 +198,7 @@ export default {
   padding: 30px!important;
 }
 .card-footer .btn {
-  height: 40px;
+  height: auto;
   width: 40px;
 }
 

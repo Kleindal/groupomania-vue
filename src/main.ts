@@ -10,6 +10,7 @@ import router from './router'
 import { useGlobalStore } from './stores/global'
 import { UserService } from './services/user.service'
 import { AuthService } from './services/auth.service'
+import { InitService } from './services/init.service'
 
 const app = createApp(App)
 
@@ -32,12 +33,11 @@ app.use(createPinia())
 app.use(VueAxios, axios)
 app.use(router)
 
+
 const authService = new AuthService();
-const userService = new UserService();
 if (authService.getToken()) {
-  userService.loadUser().then(() => app.mount('#app'));
+  (new InitService()).initApp()
+    .then(() => app.mount('#app'));
 } else {
   app.mount('#app');
 }
-
-

@@ -4,16 +4,11 @@ import ListGroup from '@/components/ListGroup.vue';
 import ListPost from '@/components/ListPost.vue';
 import EditPost from '@/components/EditPost.vue';
 import { useGlobalStore } from '@/stores/global';
-import { UserService } from '@/services/user.service';
-const token = localStorage.getItem('token');
-const config = {
-    headers: { Authorization: `Bearer ${token}` }
-};
+
 export default {
   data() {
     return {
       selectedGroup: null,
-      userService: null,
     }
   },
   components: {
@@ -22,17 +17,13 @@ export default {
     EditPost
   },
   async created() {
-    this.userService = new UserService();
-    await this.userService.loadUser();
-
-    const results = await this.axios.get('http://localhost:3006/api/groups', config);
-    this.groups = results.data;
     const store = useGlobalStore();
-    store.$patch({groups: results.data});
+    this.groups = store.$dispose.groups;
     this.selectedGroup = store.groups.filter(group => group.id == this.$route.params.id)[0];
   },
   watch: {
     $route (to, from){
+      document.querySelector('[data-bs-dismiss="offcanvas"]').click();
       const store = useGlobalStore();
       this.selectedGroup = store.groups.filter(group => group.id == to.params.id)[0];
     }
@@ -97,6 +88,7 @@ export default {
             <RouterLink to="/">
               <li>Home</li>
             </RouterLink>
+            <li>See Groups</li>
             <RouterLink to="/contacts">
               <li> Utilisateurs</li>
             </RouterLink>
@@ -108,7 +100,7 @@ export default {
                 </svg>
               </li>
             </RouterLink>
-            <li>Update is coming soon</li>
+            <li>Update is coming soon ⭐</li>
           </ul>
         </div>
       </div>
@@ -118,7 +110,9 @@ export default {
 
   <div class="container-fluid adaptative">
     <div class="row d-flex justify-content-end">
-      <list-group @selectedGroup="selectGroup($event)"></list-group>
+      <div class="col-12 d-none d-md-block">
+        <list-group @selectedGroup="selectGroup($event)"></list-group>
+      </div>
       <router-view></router-view>
       <!-- <edit-post></edit-post> -->
     </div>
@@ -126,41 +120,3 @@ export default {
 
 </template>
 
-<style>
-* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
-
-.navbar {
-  /* border-bottom: 1px solid #b1b1b1; */
-  padding: 20px 0!important;
-  box-shadow: 1px 10px 25px #c5c5c5ce;
-}
-
-.offcanvas-body li {
-  font: var(--font-lg);
-  margin: 20px 30px 30px;
-}
-.groupomania-logo {
-  width: 20px;
-}
-.icons-nav svg {
-  margin: 0px 25px;
-  height: 35px;
-  width: 35px;
-  color: var(--third-color);
-  padding: 2px;
-}
-
-.icons-nav svg:hover {
-  margin-bottom: 2px;
-  padding: 0px;
-}
-.adaptative {
-    margin-top: 7em;
-    max-width: 800px!important;
-}
-
-</style>
