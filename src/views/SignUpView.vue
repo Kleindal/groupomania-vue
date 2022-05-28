@@ -38,8 +38,14 @@ export default {
           if (this.password !== this.confirmPassword) {
               return false;
           }
-          return this.email && this.password && this.cguAccepted;
+          return this.email && this.password && this.cguAccepted && !this.isEmailInvalid && !this.isPasswordInvalid;
         },
+        isEmailInvalid() {
+          return !/.+@.+\.\w+/.test(this.email);
+        },
+        isPasswordInvalid() {
+          return this.password.length < 6;
+        }
     }
 }
 </script>
@@ -68,6 +74,7 @@ export default {
             <div class="form-group mb-3">
               <label for="email">Adresse Email</label>
               <input name="email" class="form-control" type="text" placeholder="Entrez votre email" aria-labelledby="Entrez votre email" v-model="email" />
+              <p v-if="email && isEmailInvalid" class="text-danger">Cet email est invalide</p>
             </div>
             <!-- <div class="form-group mb-3">
                 <label for="confirmEmail">Confirmez votre adresse email</label>
@@ -78,10 +85,12 @@ export default {
                 <label for="password">Mot de passe</label>
                 <input name="password" class="form-control" type="password" placeholder="Entrez votre mot de passe" aria-labelledby="Entrez votre pot de passe" v-model="password" />
                 <small id="passwordHelp" class="form-text text-muted">Ne partagez pas votre mot de passe à qui que ce soit</small>
+                <p v-if="password && isPasswordInvalid" class="form-text text-danger">Longueur minimum 6 caractères</p>
             </div>
             <div class="form-group mb-3">
                 <label for="confirmPassword">Confirmez Mot de passe</label>
                 <input name="confirmPassword" class="form-control" type="password" placeholder="Entrez votre mot de passe" aria-labelledby="Confirmer votre mot de passe" v-model="confirmPassword" />
+                <p v-if="confirmPassword && password !== confirmPassword" class="form-text text-danger">Les mots de passe doivent être identiques</p>
             </div>
             <div class="form-group mb-3">
                 <label for="cguAccepted">Je confirme les CGU, lien.</label>
